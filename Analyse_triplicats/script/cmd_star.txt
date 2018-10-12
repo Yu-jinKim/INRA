@@ -1,0 +1,113 @@
+## Ce fichier liste les options que je dois utiliser dans STAR
+
+########## INDEXATION ##########
+
+--runThreadN 16 ## peut être modifié pour 32
+--runMode genomeGenerate ## plusieurs options possibles: indexation du génome, mapping ou alignements des fichiers BAM
+--genomeDir /home/dpratella/work/STAR/genome_directory ##repertoire où sont placés les indexs du génome
+--genomeFastaFiles /home/dpratella/work/STAR/Meloidogyne_incognita_V3_20131230.fna
+--sjdbGTFfile /home/dpratella/work/STAR/MiV3.GFF3
+--sjdbOverhang max(ReadLength)-1
+--genomeChrBinNbits min(18, log2(391312/12091))
+--genomeSAindexNbases min(14, log2(391312)/2 - 1) ## pour les petits genomes, ce n'est pas le cas ici
+--sjdbGTFtagExonParentTranscript Parent
+--sjdbGTFtagExonParentGene gene_id
+
+/usr/local/bioinfo/src/STAR/STAR-2.5.1b/STAR/bin/Linux_x86_64/STAR --runThreadN 16 --runMode genomeGenerate --genomeDir /home/dpratella/work/STAR/genome_directory --genomeFastaFiles /home/dpratella/work/STAR/Meloidogyne_incognita_V3_20131230.fna --sjdbGTFfile /home/dpratella/work/STAR/MiV3.GFF3 --sjdbOverhang max(ReadLength)-1 --genomeChrBinNbits min(18, log2(391312/12091) --genomeSAindexNbases min(14, log2(391312)/2 - 1) --sjdbGTFtagExonParentTranscript transcript_id --sjdbGTFtagExonParentGene gene_id
+
+qsub -b y -l mem=4G -l h_vmem=8G -pe parallel_smp 16 /usr/local/bioinfo/src/STAR/STAR-2.5.1b/STAR/bin/Linux_x86_64/STAR --runThreadN 16 --runMode genomeGenerate --genomeDir /home/dpratella/work/STAR/genome_directory --genomeFastaFiles /home/dpratella/work/STAR/Meloidogyne_incognita_V3_20131230.fna --sjdbGTFfile /home/dpratella/work/STAR/MiV3.GFF3 --sjdbOverhang 74 --genomeChrBinNbits 18 --sjdbGTFtagExonParentTranscript transcript_id --sjdbGTFtagExonParentGene gene_id
+
+qsub -b y -l mem=4G -l h_vmem=8G -pe parallel_smp 16 /usr/local/bioinfo/src/STAR/STAR-2.5.1b/STAR/bin/Linux_x86_64/STAR --runThreadN 16 --runMode genomeGenerate --genomeDir /home/dpratella/work/STAR/genome_directory --genomeFastaFiles /home/dpratella/work/STAR/Meloidogyne_incognita_V3_20131230.fna --sjdbGTFfile /home/dpratella/work/STAR/MiV3.GFF3 --sjdbOverhang 74 --genomeChrBinNbits 18 --sjdbGTFtagExonParentTranscript Parent
+
+qsub -b y -l mem=4G -l h_vmem=8G -pe parallel_smp 16 /usr/local/bioinfo/src/STAR/STAR-2.5.1b/STAR/bin/Linux_x86_64/STAR --runThreadN 16 --runMode genomeGenerate --genomeDir /home/dpratella/work/STAR/genome_directory_test --genomeFastaFiles /home/dpratella/work/STAR/Meloidogyne_incognita_V3_20131230.fna --sjdbGTFfile /home/dpratella/work/STAR/MiV3_test.GFF3 --sjdbOverhang 74 --genomeChrBinNbits 18 --sjdbGTFtagExonParentTranscript Parent
+
+qsub -b y -l mem=4G -l h_vmem=8G -pe parallel_smp 16 /usr/local/bioinfo/src/STAR/STAR-2.5.1b/STAR/bin/Linux_x86_64/STAR --runThreadN 16 --runMode genomeGenerate --genomeDir /home/dpratella/work/STAR/genome_directory_GTF --genomeFastaFiles /home/dpratella/work/STAR/Meloidogyne_incognita_V3_20131230.fna --sjdbGTFfile /home/dpratella/work/STAR/MiV3.GTF --sjdbOverhang 74 --genomeChrBinNbits 18
+
+
+## création de l'index du génome pour les résultats de Trinity 
+qsub -b y -l mem=4G -l h_vmem=8G -pe parallel_smp 16 /usr/local/bioinfo/src/STAR/STAR-2.5.1b/STAR/bin/Linux_x86_64/STAR --runThreadN 16 --runMode genomeGenerate --genomeDir /home/dpratella/work/STAR/Trinity_ADNc2 --genomeFastaFiles /home/dpratella/work/resultats/Trinity/ADNc2_trinity/Trinity.fasta
+
+## création de l'index du génome pour les résultats de Trinity 
+qsub -b y -l mem=4G -l h_vmem=8G -pe parallel_smp 16 /usr/local/bioinfo/src/STAR/STAR-2.5.1b/STAR/bin/Linux_x86_64/STAR --runThreadN 16 --runMode genomeGenerate --genomeSAindexNbases 8 --genomeDir /home/dpratella/work/STAR/Trinity_ADNc2 --genomeFastaFiles /home/dpratella/work/resultats/Trinity/ADNc2_trinity/Trinity.fasta
+
+
+########## MAPPING ##########
+
+--runThreadN 8 (n'a pas fonctionné avec 16 coeurs)
+--runMode alignReads
+--genomeDir /home/dpratella/work/STAR/genome_directory ## à modifier ??
+--readFilesIn /home/dpratella/work/resultats/Prinseq/ADNc2/ADNc2_S2_R1_test.fastq /home/dpratella/work/resultats/Prinseq/ADNc2/ADNc2_S2_R2_test.fastq
+--sjdbGTFfile /home/dpratella/work/STAR/MiV3.GFF3
+--sjdbFileChrStartEnd ## ??? pas trouvé
+--sjdbOverhang 74
+--sjdbGTFtagExonParentTranscript Parent
+--sjdbGTFtagExonParentGene Parent
+--outFileNamePrefix /home/dpratella/work/resultats/STAR/
+--outReadsUnmapped Fastx
+--outMultimapperOrder Random
+--quantMode GeneCounts
+
+avec fichier test: fonctionne ok (pas avec 16 coeurs... pourquoi ?)
+
+qsub -b y -l mem=4G -l h_vmem=8G -pe parallel_smp 8 /usr/local/bioinfo/src/STAR/STAR-2.5.1b/STAR/bin/Linux_x86_64/STAR --runThreadN 8 --runMode alignReads --genomeDir /home/dpratella/work/STAR/genome_directory --readFilesIn /home/dpratella/work/resultats/Prinseq/ADNc2/ADNc2_S2_R1_test.fastq /home/dpratella/work/resultats/Prinseq/ADNc2/ADNc2_S2_R2_test.fastq --sjdbGTFfile /home/dpratella/work/STAR/MiV3.GFF3 --sjdbOverhang 74 --sjdbGTFtagExonParentTranscript Parent --sjdbGTFtagExonParentGene Parent --outFileNamePrefix /home/dpratella/work/resultats/STAR/ --outReadsUnmapped Fastx --outMultimapperOrder Random --quantMode GeneCounts
+
+qsub -b y -l mem=4G -l h_vmem=8G -pe parallel_smp 8 /usr/local/bioinfo/src/STAR/STAR-2.5.1b/STAR/bin/Linux_x86_64/STAR --runThreadN 8 --runMode alignReads --genomeDir /home/dpratella/work/STAR/genome_directory_test --readFilesIn /home/dpratella/work/resultats/Prinseq/ADNc2/ADNc2_S2_R1_test.fastq /home/dpratella/work/resultats/Prinseq/ADNc2/ADNc2_S2_R2_test.fastq --sjdbOverhang 74 --outFileNamePrefix /home/dpratella/work/resultats/STAR/test2/ --outReadsUnmapped Fastx --outMultimapperOrder Random --quantMode TranscriptomeSAM GeneCounts --twopassMode Basic
+
+qsub -b y -l mem=4G -l h_vmem=8G -pe parallel_smp 8 /usr/local/bioinfo/src/STAR/STAR-2.5.1b/STAR/bin/Linux_x86_64/STAR --runThreadN 8 --runMode alignReads --genomeDir /home/dpratella/work/STAR/genome_directory_test --readFilesIn /home/dpratella/work/resultats/Prinseq/ADNc2/ADNc2_S2_R1_test.fastq /home/dpratella/work/resultats/Prinseq/ADNc2/ADNc2_S2_R2_test.fastq --sjdbOverhang 74 --outFileNamePrefix /home/dpratella/work/resultats/STAR/test2/ --outReadsUnmapped Fastx --outMultimapperOrder Random --quantMode TranscriptomeSAM GeneCounts --twopassMode Basic
+
+qsub -b y -l mem=4G -l h_vmem=8G -pe parallel_smp 8 /usr/local/bioinfo/src/STAR/STAR-2.5.1b/STAR/bin/Linux_x86_64/STAR --runThreadN 8 --runMode alignReads --genomeDir /home/dpratella/work/STAR/genome_directory_test --readFilesIn /home/dpratella/work/resultats/Prinseq/ADNc2/ADNc2_S2_R1_test.fastq /home/dpratella/work/resultats/Prinseq/ADNc2/ADNc2_S2_R2_test.fastq --sjdbGTFfile /home/dpratella/work/STAR/MiV3.GTF --sjdbOverhang 74 --outFileNamePrefix /home/dpratella/work/resultats/STAR/test3/ --outReadsUnmapped Fastx --outMultimapperOrder Random --quantMode TranscriptomeSAM GeneCounts --twopassMode Basic
+
+avec la banque ADNc2_S2
+
+qsub -b y -l mem=4G -l h_vmem=8G -pe parallel_smp 8 /usr/local/bioinfo/src/STAR/STAR-2.5.1b/STAR/bin/Linux_x86_64/STAR --runThreadN 8 --runMode alignReads --genomeDir /home/dpratella/work/STAR/genome_directory --readFilesIn /home/dpratella/work/resultats/Prinseq/ADNc2/ADNc2_S2_R1_001_len_1.fastq /home/dpratella/work/resultats/Prinseq/ADNc2/ADNc2_S2_R1_001_len_2.fastq --sjdbGTFfile /home/dpratella/work/STAR/MiV3.GFF3 --sjdbOverhang 74 --sjdbGTFtagExonParentTranscript Parent --sjdbGTFtagExonParentGene Parent --outFileNamePrefix /home/dpratella/work/resultats/STAR/ADNc2/ --outReadsUnmapped Fastx --outMultimapperOrder Random --quantMode GeneCounts
+
+ADNc3
+
+qsub -b y -l mem=4G -l h_vmem=8G -pe parallel_smp 8 /usr/local/bioinfo/src/STAR/STAR-2.5.1b/STAR/bin/Linux_x86_64/STAR --runThreadN 8 --runMode alignReads --genomeDir /home/dpratella/work/STAR/genome_directory --readFilesIn /home/dpratella/work/resultats/Prinseq/ADNc3/ADNc3_S3_R1_001_len_1.fastq /home/dpratella/work/resultats/Prinseq/ADNc3/ADNc3_S3_R1_001_len_2.fastq --sjdbGTFfile /home/dpratella/work/STAR/MiV3.GFF3 --sjdbOverhang 74 --sjdbGTFtagExonParentTranscript Parent --sjdbGTFtagExonParentGene Parent --outFileNamePrefix /home/dpratella/work/resultats/STAR/ADNc3/ --outReadsUnmapped Fastx --outMultimapperOrder Random --quantMode GeneCounts
+
+qsub -b y -l mem=4G -l h_vmem=8G -pe parallel_smp 8 /usr/local/bioinfo/src/STAR/STAR-2.5.1b/STAR/bin/Linux_x86_64/STAR --runThreadN 8 --runMode alignReads --genomeDir /home/dpratella/work/STAR/genome_directory --readFilesIn /home/dpratella/work/resultats/Prinseq/ADNc1/ADNc1_S1_R1_001_prinseq_1.fastq /home/dpratella/work/resultats/Prinseq/ADNc1/ADNc1_S1_R1_001_prinseq_2.fastq --sjdbGTFfile /home/dpratella/work/STAR/MiV3.GFF3 --sjdbOverhang 74 --sjdbGTFtagExonParentTranscript Parent --sjdbGTFtagExonParentGene Parent --outFileNamePrefix /home/dpratella/work/resultats/STAR/ADNc1/ --outReadsUnmapped Fastx --outMultimapperOrder Random --quantMode GeneCounts
+
+
+qsub -b y -l mem=4G -l h_vmem=8G cufflinks gffread -T /home/dpratella/work/STAR/MiV3.GFF3 -o /home/dpratella/work/STAR/MiV3.GTF
+
+qsub -b y -l mem=4G -l h_vmem=8G cufflinks gffread /home/dpratella/work/STAR/MiV3.GFF3 -o /home/dpratella/work/STAR/MiV3.GTF
+
+qsub -b y -l mem=4G -l h_vmem=8G cufflinks gffread -E /home/dpratella/work/STAR/MiV3.GFF3 -o /home/dpratella/work/STAR/MiV3.GTF
+
+qsub -b y -l mem=4G -l h_vmem=8G cufflinks gffread /home/dpratella/work/STAR/MiV3.GFF3 -T -o /home/dpratella/work/STAR/MiV3.GTF
+
+qsub -b y -l mem=4G -l h_vmem=8G gffread /home/dpratella/work/STAR/MiV3.GFF3 -T -o /home/dpratella/work/STAR/MiV3.GTF
+
+
+Chimeric = 30
+
+qsub -b y -l mem=4G -l h_vmem=8G -pe parallel_smp 8 /usr/local/bioinfo/src/STAR/STAR-2.5.1b/STAR/bin/Linux_x86_64/STAR --runThreadN 8 --runMode alignReads --genomeDir /home/dpratella/work/STAR/genome_directory_GTF --readFilesIn /home/dpratella/work/resultats/Prinseq/ADNc2/ADNc2_S2_R1_001_len_1.fastq /home/dpratella/work/resultats/Prinseq/ADNc2/ADNc2_S2_R1_001_len_2.fastq --sjdbOverhang 74 --outFileNamePrefix /home/dpratella/work/resultats/STAR/ADNc2/rep_2/ --outReadsUnmapped Fastx --outMultimapperOrder Random --chimSegmentMin 30 --quantMode TranscriptomeSAM GeneCounts --twopassMode Basic
+
+chimeric = 20
+
+qsub -b y -l mem=4G -l h_vmem=8G -pe parallel_smp 8 /usr/local/bioinfo/src/STAR/STAR-2.5.1b/STAR/bin/Linux_x86_64/STAR --runThreadN 8 --runMode alignReads --genomeDir /home/dpratella/work/STAR/genome_directory_GTF --readFilesIn /home/dpratella/work/resultats/Prinseq/ADNc2/ADNc2_S2_R1_001_len_1.fastq /home/dpratella/work/resultats/Prinseq/ADNc2/ADNc2_S2_R1_001_len_2.fastq --sjdbOverhang 74 --outFileNamePrefix /home/dpratella/work/resultats/STAR/ADNc2/rep_20/ --outReadsUnmapped Fastx --outMultimapperOrder Random --chimSegmentMin 20 --quantMode TranscriptomeSAM GeneCounts --twopassMode Basic
+
+ADNc1
+
+qsub -b y -l mem=4G -l h_vmem=8G -pe parallel_smp 8 /usr/local/bioinfo/src/STAR/STAR-2.5.1b/STAR/bin/Linux_x86_64/STAR --runThreadN 8 --runMode alignReads --genomeDir /home/dpratella/work/STAR/genome_directory_GTF --readFilesIn /home/dpratella/work/resultats/Prinseq/ADNc1/ADNc1_S1_R1_001_prinseq_1.fastq /home/dpratella/work/resultats/Prinseq/ADNc1/ADNc1_S1_R1_001_prinseq_2.fastq --sjdbOverhang 74 --outFileNamePrefix /home/dpratella/work/resultats/STAR/ADNc1/ --outReadsUnmapped Fastx --outMultimapperOrder Random --chimSegmentMin 20 --quantMode TranscriptomeSAM GeneCounts --twopassMode Basic
+
+ADNc3
+
+qsub -b y -l mem=4G -l h_vmem=8G -pe parallel_smp 8 /usr/local/bioinfo/src/STAR/STAR-2.5.1b/STAR/bin/Linux_x86_64/STAR --runThreadN 8 --runMode alignReads --genomeDir /home/dpratella/work/STAR/genome_directory_GTF --readFilesIn /home/dpratella/work/resultats/Prinseq/ADNc3/ADNc3_S3_R1_001_len_1.fastq /home/dpratella/work/resultats/Prinseq/ADNc3/ADNc3_S3_R1_001_len_2.fastq --sjdbOverhang 74 --outFileNamePrefix /home/dpratella/work/resultats/STAR/ADNc3/ --outReadsUnmapped Fastx --outMultimapperOrder Random --chimSegmentMin 20 --quantMode TranscriptomeSAM GeneCounts --twopassMode Basic
+
+
+
+qsub -b y -l mem=4G -l h_vmem=8G -pe parallel_smp 8 /usr/local/bioinfo/src/STAR/STAR-2.5.1b/STAR/bin/Linux_x86_64/STAR --runThreadN 8 --runMode alignReads --genomeDir /home/dpratella/work/resultats/STAR/Trinity_ADNc2 --readFilesIn /home/dpratella/work/resultats/Prinseq/ADNc2/ADNc2_S2_sanseuk28s_avecbac23s_prinseq_1.fastq /home/dpratella/work/resultats/Prinseq/ADNc2/ADNc2_S2_sanseuk28s_avecbac23s_prinseq_2.fastq --outFileNamePrefix /home/dpratella/work/resultats/STAR/Trinity_ADNc2/ --outReadsUnmapped Fastx --outMultimapperOrder Random --chimSegmentMin 20 --quantMode TranscriptomeSAM GeneCounts --twopassMode Basic
+
+
+qsub -b y -l mem=2G -l h_vmem=4G -pe parallel_smp 4 /usr/local/bioinfo/src/STAR/STAR-2.5.1b/STAR/bin/Linux_x86_64/STAR --runThreadN 4 --runMode alignReads --genomeDir /home/dpratella/work/resultats/STAR/Trinity_ADNc2 --readFilesIn /home/dpratella/work/resultats/Prinseq/ADNc2/ADNc2_S2_sanseuk28s_avecbac23s_prinseq_1.fastq /home/dpratella/work/resultats/Prinseq/ADNc2/ADNc2_S2_sanseuk28s_avecbac23s_prinseq_2.fastq --outFileNamePrefix /home/dpratella/work/resultats/STAR/Trinity_ADNc2/ok --outReadsUnmapped Fastx --outMultimapperOrder Random --quantMode TranscriptomeSAM GeneCounts --twopassMode Basic
+
+qsub -b y /usr/local/bioinfo/src/STAR/STAR-2.5.1b/STAR/bin/Linux_x86_64/STAR --runThreadN 1 --runMode alignReads --genomeDir /home/dpratella/work/STAR/Trinity_ADNc2 --readFilesIn /home/dpratella/work/resultats/Prinseq/ADNc2/ADNc2_S2_sanseuk28s_avecbac23s_prinseq_1.fastq /home/dpratella/work/resultats/Prinseq/ADNc2/ADNc2_S2_sanseuk28s_avecbac23s_prinseq_2.fastq --outFileNamePrefix /home/dpratella/work/resultats/STAR/Trinity_ADNc2/ok --outReadsUnmapped Fastx --outMultimapperOrder Random
+
+qsub -b y /usr/local/bioinfo/src/STAR/STAR-2.5.1b/STAR/bin/Linux_x86_64/STAR --runThreadN 1 --runMode alignReads --genomeDir /home/dpratella/work/STAR/Trinity_ADNc2 --readFilesIn /home/dpratella/work/resultats/Prinseq/ADNc2/ADNc2_S2_sanseuk28s_avecbac23s_prinseq_2.fastq /home/dpratella/work/resultats/Prinseq/ADNc2/ADNc2_S2_sanseuk28s_avecbac23s_prinseq_1.fastq --outFileNamePrefix /home/dpratella/work/resultats/STAR/Trinity_ADNc2/ok --outReadsUnmapped Fastx --outMultimapperOrder Random
+
+qsub -b y -l mem=4G -l h_vmem=8G -pe parallel_smp 8 /usr/local/bioinfo/src/STAR/STAR-2.5.1b/STAR/bin/Linux_x86_64/STAR --runThreadN 8 --runMode alignReads --genomeDir /home/dpratella/work/STAR/Trinity_ADNc2 --readFilesIn /home/dpratella/work/resultats/Prinseq/ADNc2/ADNc2_S2_sanseuk28s_avecbac23s_prinseq_1.fastq /home/dpratella/work/resultats/Prinseq/ADNc2/ADNc2_S2_sanseuk28s_avecbac23s_prinseq_2.fastq --outFileNamePrefix /home/dpratella/work/resultats/STAR/Trinity_ADNc2/ --outReadsUnmapped Fastx --outMultimapperOrder Random --chimSegmentMin 20 --quantMode GeneCounts --twopassMode Basic
+
+qsub -b y -l mem=4G -l h_vmem=8G -pe parallel_smp 8 /usr/local/bioinfo/src/STAR/STAR-2.5.1b/STAR/bin/Linux_x86_64/STAR --runThreadN 8 --runMode alignReads --genomeDir /home/dpratella/work/STAR/Trinity_ADNc2 --readFilesIn /home/dpratella/work/resultats/Prinseq/ADNc2/ADNc2_S2_sanseuk28s_avecbac23s_prinseq_1.fastq /home/dpratella/work/resultats/Prinseq/ADNc2/ADNc2_S2_sanseuk28s_avecbac23s_prinseq_2.fastq --outFileNamePrefix /home/dpratella/work/resultats/STAR/Trinity_ADNc2/ --outReadsUnmapped Fastx --outMultimapperOrder Random --quantMode GeneCounts --twopassMode Basic
+
+qsub -b y -l mem=4G -l h_vmem=8G -pe parallel_smp 8 /usr/local/bioinfo/src/STAR/STAR-2.5.1b/STAR/bin/Linux_x86_64/STAR --runThreadN 8 --runMode alignReads --genomeDir /home/dpratella/work/STAR/Trinity_ADNc2 --readFilesIn /home/dpratella/work/resultats/Prinseq/ADNc2/ADNc2_S2_sanseuk28s_avecbac23s_prinseq_1.fastq /home/dpratella/work/resultats/Prinseq/ADNc2/ADNc2_S2_sanseuk28s_avecbac23s_prinseq_2.fastq --outFileNamePrefix /home/dpratella/work/resultats/STAR/Trinity_ADNc2/ --outReadsUnmapped Fastx --outMultimapperOrder Random --twopassMode Basic

@@ -1,0 +1,19 @@
+$ cd /storage/data/rnaseq/nematodes/incognita/asexevol/asexevol_UNMERGED_CLEAN/
+
+$ time nohup sh merge2.sh &
+
+$ cd /home/Tools/sortmerna-2.1-linux-64/
+
+$ time nohup sh sortmerna2.sh &
+
+$ cd /storage/data/rnaseq/nematodes/incognita/asexevol/asexevol_UNMERGED_CLEAN/
+
+$ time nohup sh unmerge2.sh &
+
+$ cd /storage/data/rnaseq/nematodes/incognita/asexevol/asexevol_UNMERGED_CLEAN/
+
+$ time nohup sh fastqc2.sh &
+
+$ time nohup sh prinseq.sh &
+
+$ time nohup sh STAR2.sh &

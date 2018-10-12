@@ -1,0 +1,62 @@
+#### Fonction ####
+
+# Trouver les outliers grâce aux boxplots
+
+#### Besoins ####
+
+# Fichier tableau log FPKM
+
+
+########################################################################################################################################################
+
+donnees=read.table("Log10-FPKM.txt",h=T)
+
+# Paramètres graphiques (nombres de graphs sur la fenêtre, taille marges, taille Titre)
+par(mfrow=c(3,3),mar=c(2,3,3,1),cex.main=1.5,col.main="lightblue")
+
+# Création des boxplots (limite sur les ordonnées = 5.5)
+boxplot(donnees[,2],main="Mix (42413 gènes)",ylab="Valeurs Log10 FPKM",ylim=c(-0.2,5.5))
+
+# Extraction des données importants pour les boxplots
+mix=boxplot(donnees[,2],plot=F)$stats
+
+# On fait afficher les données
+text(x=rep(1,each=5)+0.3,y=as.vector(mix), labels=as.vector(mix))
+
+boxplot(donnees[,3],main="Oeuf (42413 gènes)",ylab="Valeurs Log10 FPKM",ylim=c(-0.2,5.5))
+Oeuf=boxplot(donnees[,3],plot=F)$stats
+text(x=rep(1,each=5)+0.3,y=as.vector(Oeuf), labels=as.vector(Oeuf))
+
+boxplot(donnees[,4],main="Femelle (42413 gènes)",ylab="Valeurs Log10 FPKM",ylim=c(-0.2,5.5))
+Femelle=boxplot(donnees[,4],plot=F)$stats
+text(x=rep(1,each=5)+0.3,y=as.vector(Femelle), labels=as.vector(Femelle))
+
+boxplot(donnees[,5],main="Mâle (42413 gènes)",ylab="Valeurs Log10 FPKM",ylim=c(-0.2,5.5))
+Mâle=boxplot(donnees[,5],plot=F)$stats
+text(x=rep(1,each=5)+0.3,y=as.vector(Mâle), labels=as.vector(Mâle))
+
+boxplot(donnees[,6],main="J3-J4 (42413 gènes)",ylab="Valeurs Log10 FPKM",ylim=c(-0.2,5.5))
+J3_J4=boxplot(donnees[,6],plot=F)$stats
+text(x=rep(1,each=5)+0.3,y=as.vector(J3_J4), labels=as.vector(J3_J4))
+
+boxplot(donnees[,7],main="Groupe 2 (42413 gènes)",ylab="Valeurs Log10 FPKM",ylim=c(-0.2,5.5))
+Groupe_2=boxplot(donnees[,7],plot=F)$stats
+text(x=rep(1,each=5)+0.3,y=as.vector(Groupe_2), labels=as.vector(Groupe_2))
+
+boxplot(donnees[,8],main="Groupe 4 (42413 gènes)",ylab="Valeurs Log10 FPKM",ylim=c(-0.2,5.5))
+Groupe_4=boxplot(donnees[,8],plot=F)$stats
+text(x=rep(1,each=5)+0.3,y=as.vector(Groupe_4), labels=as.vector(Groupe_4))
+
+boxplot(donnees[,9],main="J2-1 (42413 gènes)",ylab="Valeurs Log10 FPKM",ylim=c(-0.2,5.5))
+J2_1=boxplot(donnees[,9],plot=F)$stats
+text(x=rep(1,each=5)+0.3,y=as.vector(J2_1), labels=as.vector(J2_1))
+
+boxplot(donnees[,10],main="J2-2 (42413 gènes)",ylab="Valeurs Log10 FPKM",ylim=c(-0.2,5.5))
+J2_2=boxplot(donnees[,10],plot=F)$stats
+text(x=rep(1,each=5)+0.3,y=as.vector(J2_2), labels=as.vector(J2_2))
+
+
+
+
+
+

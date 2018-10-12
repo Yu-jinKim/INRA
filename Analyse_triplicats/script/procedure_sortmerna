@@ -1,0 +1,43 @@
+ssh -X ipn-geno@ip-geno
+
+Tes données sont sur le serveur spiboc-storage accessible par un montage autoNFS /storage/data
+
+ls /storage/data/rnaseq/nematodes/incognita/asexevol/asexevol_UNMERGED_CLEAN/asexevol_clean_fastq_20160720_J3
+ls /storage/data/rnaseq/nematodes/incognita/asexevol/asexevol_UNMERGED_CLEAN/asexevol_clean_fastq_20160720_Fem
+ls /storage/data/rnaseq/nematodes/incognita/asexevol/asexevol_UNMERGED_CLEAN/asexevol_clean_fastq_20160718_J2
+ls /storage/data/rnaseq/nematodes/incognita/asexevol/asexevol_UNMERGED_CLEAN/asexevol_clean_fastq_20160718_W
+
+
+$ cd /storage/data/rnaseq/nematodes/incognita/asexevol/asexevol_UNMERGED_CLEAN/asexevol_clean_fastq_20160720_J3
+
+$ touch merge2.sh
+
+$ more merge2.sh
+sh /home/Tools/sortmerna-2.1-linux-64/scripts/merge-paired-reads.sh J3-1_S4_R1_001_clean.fastq J3-1_S4_R1_001_clean.fastq J3-1_S4_R1R2_001_clean2.fastq
+sh /home/Tools/sortmerna-2.1-linux-64/scripts/merge-paired-reads.sh J3-2_S5_R1_001_clean.fastq J3-2_S5_R1_001_clean.fastq J3-2_S5_R1R2_001_clean2.fastq
+sh ....
+
+$ time nohup sh merge2.sh &
+
+$ cd /home/Tools/sortmerna-2.1-linux-64/
+
+$ touch sortmerna2.sh
+
+$ more sortmerna2.sh
+./sortmerna --ref ./mito_database/all_species_melo_mito.fa,./index/all_species_melo_mito.idx --reads /storage/data/rnaseq/nematodes/incognita/asexevol/asexevol_UNMERGED_CLEAN/asexevol_clean_fastq_20160720_J3/J3-1_S4_R1R2_001_clean2.fastq --aligned /storage/data/rnaseq/nematodes/incognita/asexevol/asexevol_UNMERGED_CLEAN/asexevol_clean_fastq_20160720_J3/sortmerna2/J3-1_S4_R1R2_001_clean2.fastq-mito --other /storage/data/rnaseq/nematodes/incognita/asexevol/asexevol_UNMERGED_CLEAN/asexevol_clean_fastq_20160720_J3/sortmerna2/J3-1_S4_R1R2_001_clean2.fastq-clean --paired_in --fastx --log -a 30 -m 204800 -v
+./sortmerna ...
+
+$ time nohup sh sortmerna2.sh &
+
+$ cd /storage/data/rnaseq/nematodes/incognita/asexevol/asexevol_UNMERGED_CLEAN/asexevol_clean_fastq_20160720_J3/sortmerna2
+
+$ touch unmerge2.sh
+
+$ more unmerge2.sh
+sh /home/Tools/sortmerna-2.1-linux-64/scripts/unmerge-paired-reads.sh J3-1_S4_R1_001_clean2.fastq-clean J3-1_S4_R2_001_clean2.fastq-clean J3-1_S4_R1R2_001_clean2.fastq-clean
+sh ...
+
+$ time nohup sh unmerge2.sh &
+
+
+

@@ -1,0 +1,115 @@
+#### Fonction ####
+
+# Hclust et sauvegarde des numéros des gènes selon les groupes dans lesquels ils appartiennent
+# ATTENTION AUX NOMS DES FICHIERS EN SORTIE
+
+########################################################################################################################################################
+
+library(gplots)
+donnees=read.table("Log10_FPKM_filtre_complet",h=T)
+distance=dist(donnees)
+hc=hclust(distance,method = "ward")
+plot(hc,labels=F,hang=0.01)
+
+# Création du dégradé
+col_breaks=unique(c(seq(0,1,length=10),seq(1,3,length=10),seq(3,5,length=10),seq(5,7,length=10),seq(7,10,length=10)))
+
+# Choix des couleurs
+couleurs=colorRampPalette(c("red","blue","yellow","purple","green"))(n=length(col_breaks)-1)
+
+heatmap.2(as.matrix(distance),density.info = "none",trace = "none",col=couleurs,breaks = col_breaks)
+
+# Sélection des groupes
+
+rect.hclust(hc,11) # entoure dans le dendogramme
+liste=rect.hclust(hc,11) # contient les numéros d'accession des distances
+setwd("/home/job_repository/R_hclust/data/new_data/11_groups/")
+write.table(liste[1],"group_1",sep="\t",quote=F,row.names=F,col.names=F)
+write.table(liste[2],"group_2",sep="\t",quote=F,row.names=F,col.names=F)
+write.table(liste[3],"group_3",sep="\t",quote=F,row.names=F,col.names=F)
+write.table(liste[4],"group_4",sep="\t",quote=F,row.names=F,col.names=F)
+write.table(liste[5],"group_5",sep="\t",quote=F,row.names=F,col.names=F)
+write.table(liste[6],"group_6",sep="\t",quote=F,row.names=F,col.names=F)
+write.table(liste[7],"group_7",sep="\t",quote=F,row.names=F,col.names=F)
+write.table(liste[8],"group_8",sep="\t",quote=F,row.names=F,col.names=F)
+write.table(liste[9],"group_9",sep="\t",quote=F,row.names=F,col.names=F)
+write.table(liste[10],"group_10",sep="\t",quote=F,row.names=F,col.names=F)
+write.table(liste[11],"group_11",sep="\t",quote=F,row.names=F,col.names=F)
+
+rect.hclust(hc,10) # entoure dans le dendogramme
+liste=rect.hclust(hc,10) # contient les numéros d'accession des distances
+setwd("/home/job_repository/R_hclust/data/new_data/10_groups/")
+write.table(liste[1],"group_1",sep="\t",quote=F,row.names=F,col.names=F)
+write.table(liste[2],"group_2",sep="\t",quote=F,row.names=F,col.names=F)
+write.table(liste[3],"group_3",sep="\t",quote=F,row.names=F,col.names=F)
+write.table(liste[4],"group_4",sep="\t",quote=F,row.names=F,col.names=F)
+write.table(liste[5],"group_5",sep="\t",quote=F,row.names=F,col.names=F)
+write.table(liste[6],"group_6",sep="\t",quote=F,row.names=F,col.names=F)
+write.table(liste[7],"group_7",sep="\t",quote=F,row.names=F,col.names=F)
+write.table(liste[8],"group_8",sep="\t",quote=F,row.names=F,col.names=F)
+write.table(liste[9],"group_9",sep="\t",quote=F,row.names=F,col.names=F)
+write.table(liste[10],"group_10",sep="\t",quote=F,row.names=F,col.names=F)
+
+rect.hclust(hc,8) # entoure dans le dendogramme
+liste=rect.hclust(hc,8) # contient les numéros d'accession des distances
+setwd("/home/job_repository/R_hclust/data/new_data/8_groups/")
+write.table(liste[1],"group_1",sep="\t",quote=F,row.names=F,col.names=F)
+write.table(liste[2],"group_2",sep="\t",quote=F,row.names=F,col.names=F)
+write.table(liste[3],"group_3",sep="\t",quote=F,row.names=F,col.names=F)
+write.table(liste[4],"group_4",sep="\t",quote=F,row.names=F,col.names=F)
+write.table(liste[5],"group_5",sep="\t",quote=F,row.names=F,col.names=F)
+write.table(liste[6],"group_6",sep="\t",quote=F,row.names=F,col.names=F)
+write.table(liste[7],"group_7",sep="\t",quote=F,row.names=F,col.names=F)
+write.table(liste[8],"group_8",sep="\t",quote=F,row.names=F,col.names=F)
+
+rect.hclust(hc,7) # entoure dans le dendogramme
+liste=rect.hclust(hc,7) # contient les numéros d'accession des distances
+setwd("/home/job_repository/R_hclust/data/new_data/7_groups/")
+write.table(liste[1],"group_1",sep="\t",quote=F,row.names=F,col.names=F)
+write.table(liste[2],"group_2",sep="\t",quote=F,row.names=F,col.names=F)
+write.table(liste[3],"group_3",sep="\t",quote=F,row.names=F,col.names=F)
+write.table(liste[4],"group_4",sep="\t",quote=F,row.names=F,col.names=F)
+write.table(liste[5],"group_5",sep="\t",quote=F,row.names=F,col.names=F)
+write.table(liste[6],"group_6",sep="\t",quote=F,row.names=F,col.names=F)
+write.table(liste[7],"group_7",sep="\t",quote=F,row.names=F,col.names=F)
+
+rect.hclust(hc,5) # entoure dans le dendogramme
+liste=rect.hclust(hc,5) # contient les numéros d'accession des distances
+setwd("/home/job_repository/R_hclust/data/new_data/5_groups/")
+write.table(liste[1],"group_1",sep="\t",quote=F,row.names=F,col.names=F)
+write.table(liste[2],"group_2",sep="\t",quote=F,row.names=F,col.names=F)
+write.table(liste[3],"group_3",sep="\t",quote=F,row.names=F,col.names=F)
+write.table(liste[4],"group_4",sep="\t",quote=F,row.names=F,col.names=F)
+write.table(liste[5],"group_5",sep="\t",quote=F,row.names=F,col.names=F)
+
+rect.hclust(hc,4) # entoure dans le dendogramme
+liste=rect.hclust(hc,4) # contient les numéros d'accession des distances
+setwd("/home/job_repository/R_hclust/data/new_data/4_groups/")
+write.table(liste[1],"group_1",sep="\t",quote=F,row.names=F,col.names=F)
+write.table(liste[2],"group_2",sep="\t",quote=F,row.names=F,col.names=F)
+write.table(liste[3],"group_3",sep="\t",quote=F,row.names=F,col.names=F)
+write.table(liste[4],"group_4",sep="\t",quote=F,row.names=F,col.names=F)
+
+rect.hclust(hc,3) # entoure dans le dendogramme
+liste=rect.hclust(hc,3) # contient les numéros d'accession des distances
+setwd("/home/job_repository/R_hclust/data/new_data/3_groups/")
+write.table(liste[1],"group_1",sep="\t",quote=F,row.names=F,col.names=F)
+write.table(liste[2],"group_2",sep="\t",quote=F,row.names=F,col.names=F)
+write.table(liste[3],"group_3",sep="\t",quote=F,row.names=F,col.names=F)
+
+rect.hclust(hc,2) # entoure dans le dendogramme
+liste=rect.hclust(hc,2) # contient les numéros d'accession des distances
+setwd("/home/job_repository/R_hclust/data/new_data/2_groups/")
+write.table(liste[1],"group_1",sep="\t",quote=F,row.names=F,col.names=F)
+write.table(liste[2],"group_2",sep="\t",quote=F,row.names=F,col.names=F)
+
+setwd("/home/job_repository/R_hclust/data/new_data/")
+pdf("Dendo_complet")
+plot(hc,labels=F,hang=0.01)
+rect.hclust(hc,2) # entoure dans le dendogramme
+rect.hclust(hc,3) # entoure dans le dendogramme
+rect.hclust(hc,4) # entoure dans le dendogramme
+rect.hclust(hc,5) # entoure dans le dendogramme
+rect.hclust(hc,7) # entoure dans le dendogramme
+rect.hclust(hc,10) # entoure dans le dendogramme
+dev.off()

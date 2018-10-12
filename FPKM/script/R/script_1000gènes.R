@@ -1,0 +1,10 @@
+library(gplots)
+donnees=read.table("Log10_filtre(low_comp+0+log10>2.5+log10<0.3).txt",h=T)
+test=donnees[1:1000,]
+distance=dist(test)
+hc=hclust(distance,method = "ward.D2")
+plot(hc,labels=F,hang=0.01)
+col_breaks=unique(c(seq(0,1,length=10),seq(1,3,length=10),seq(3,5,length=10),seq(5,7,length=10),seq(7,10,length=10)))
+couleurs=colorRampPalette(c("red","blue","yellow","purple","green"))(n=length(col_breaks)-1)
+heatmap.2(as.matrix(distance),density.info = "none",trace = "none",col=couleurs,breaks = col_breaks)
+abline(h=c(10,20))

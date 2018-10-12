@@ -1,0 +1,20 @@
+#### Fonction ####
+
+# Filtrer les valeurs qui sont en double dans les filtres >2.5 et low_complexity
+
+setwd("/home/yujin/Documents/FPKM/test/")
+
+# Deuxième partie
+genes=read.table("Gènes_log10_FPKM>2.5")
+threshold=read.table("seq_retirées.txt")
+
+# TRUE/FALSE si la valeur dans l'un des vecteurs se trouve dans l'autre vecteur
+is.element(threshold$V1,genes$V1)
+genes_retires=c()
+
+# setdiff permet d'obetnir un vector contenant les valeurs de la liste x qui ne sont pas contenus dans la liste y
+genes_retires=append(genes_retires,c(setdiff(threshold$V1,genes$V1)))
+genes_retires=append(genes_retires,c(setdiff(genes$V1,threshold$V1)))
+genes_conserves=setdiff(tracking_id,genes_retires)
+
+conserve=subset(donnees,is.element(tracking_id,genes_conserves)==T)

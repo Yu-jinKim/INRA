@@ -1,0 +1,22 @@
+sh /home/Tools/sortmerna-2.1-linux-64/scripts/merge-paired-reads.sh
+J2-2_S2_R1_001.fastq
+J2-2_S2_R2_001.fastq
+J2-2_S2_R1R2_001.fastq
+
+
+./sortmerna
+--ref ./mito_database/all_species_melo_mito.fa,./index/all_species_melo_mito.idx
+--reads /home/data/Rnaseq/Asexevol/160712_NB500938_danchin_asexevol_run1/J2-2_S2_R1R2_001.fastq
+--aligned /home/data/Rnaseq/Asexevol/160712_NB500938_danchin_asexevol_run1/sortmerna/J2-2_S2_R1R2_001.fastq-mito
+--other /home/data/Rnaseq/Asexevol/160712_NB500938_danchin_asexevol_run1/sortmerna/J2-2_S2_R1R2_001.fastq-clean
+--paired_in
+--fastx
+--log
+-a 30
+-m 204800
+-v
+
+sh /home/Tools/sortmerna-2.1-linux-64/scripts/unmerge-paired-reads.sh
+W3_S6_R1R2_001.fastq-clean.fastq
+W3_S6_R1_001_clean.fastq
+W3_S6_R2_001_clean.fastq 
